@@ -179,7 +179,7 @@ function drawAllLines(thisObject, context) {
             var tempFillStyle = context.fillStyle;
             context.font = "25px sans-serif";
             context.fillStyle = "white";
-            context.fillText(oB.name, bA.screenX + 10, 20);
+            context.fillText(oB.name + " " + bB.name, bA.screenX + 10, 20);
             context.font = tempFont;
             context.fillStyle = tempFillStyle;
         }
@@ -188,7 +188,7 @@ function drawAllLines(thisObject, context) {
             var tempFillStyle = context.fillStyle;
             context.font = "25px sans-serif";
             context.fillStyle = "white";
-            context.fillText(oA.name, bA.screenX + 10, 20);
+            context.fillText(oA.name + " " + bA.name, bA.screenX + 10, 20);
             context.font = tempFont;
             context.fillStyle = tempFillStyle;
         }
