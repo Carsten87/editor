@@ -78,7 +78,7 @@ function deleteLines(x21, y21, x22, y22) {
             if (checkLineCross(bA.screenX, bA.screenY, bB.screenX, bB.screenY, x21, y21, x22, y22, globalCanvas.canvas.width, globalCanvas.canvas.height)) {
                 delete thisObject.objectLinks[subKeysome];
                 console.log("iam executing link deletion");
-                deleteLinkFromObject(thisObject.ip,keysome, subKeysome);
+                deleteLinkFromObject(thisObject.ip, keysome, subKeysome);
             }
         }
     }
@@ -118,20 +118,20 @@ function drawAllLines(thisObject, context) {
         if (bA === undefined || bB === undefined || oA === undefined || oB === undefined) {
             continue; //should not be undefined
         }
-            // the line actuall screen possition gets changed so that when cutting the line of an out of image object
-            // the line still gets cut
+        // the line actuall screen possition gets changed so that when cutting the line of an out of image object
+        // the line still gets cut
 
-            var thisM = globalStates.height / 500 * 1000;
+        var thisM = globalStates.height / 500 * 1000;
 
-            // bA.screenZ =  thisM/(Math.sqrt(bA.screenZ));
-            // bB.screenZ = thisM/(Math.sqrt(bB.screenZ));
+        // bA.screenZ =  thisM/(Math.sqrt(bA.screenZ));
+        // bB.screenZ = thisM/(Math.sqrt(bB.screenZ));
 
 
-            bA.screenZ = thisM / (bA.screenZ);
-            bB.screenZ = thisM / (bB.screenZ);
+        bA.screenZ = thisM / (bA.screenZ);
+        bB.screenZ = thisM / (bB.screenZ);
 
-           // console.log(oB.ObjectVisible);
-           // console.log(oA.ObjectVisible);
+        // console.log(oB.ObjectVisible);
+        // console.log(oA.ObjectVisible);
 
 
         if (bA.screenZ > 3) {
@@ -156,22 +156,42 @@ function drawAllLines(thisObject, context) {
 
 
         if (!oB.ObjectVisible) {
-                bB.screenX = bA.screenX;
-                bB.screenY = -10;
-                bB.screenZ = bA.screenZ;
-            }
+            bB.screenX = bA.screenX;
+            bB.screenY = -10;
+            bB.screenZ = bA.screenZ;
+        }
 
-            if (!oA.ObjectVisible) {
-                bA.screenX = bB.screenX;
-                bA.screenY = -10;
-                bA.screenZ = bB.screenZ;
-            }
+       
 
+        if (!oA.ObjectVisible) {
+            bA.screenX = bB.screenX;
+            bA.screenY = -10;
+            bA.screenZ = bB.screenZ;
+        }
 
-            //   console.log( bB.screenZ);
+        
+        //   console.log( bB.screenZ);
         bA.screenZ = 1;
-            bB.screenZ = 1;
+        bB.screenZ = 1;
 
+        if (!oB.ObjectVisible && oA.ObjectVisible) {
+            var tempFont = context.font;
+            var tempFillStyle = context.fillStyle;
+            context.font = "25px sans-serif";
+            context.fillStyle = "white";
+            context.fillText(oB.name, bA.screenX + 10, 20);
+            context.font = tempFont;
+            context.fillStyle = tempFillStyle;
+        }
+        if (!oA.ObjectVisible && oB.ObjectVisible) {
+            var tempFont = context.font;
+            var tempFillStyle = context.fillStyle;
+            context.font = "25px sans-serif";
+            context.fillStyle = "white";
+            context.fillText(oA.name, bA.screenX + 10, 20);
+            context.font = tempFont;
+            context.fillStyle = tempFillStyle;
+        }
 
         drawLine(context, [bA.screenX, bA.screenY], [bB.screenX, bB.screenY], bA.screenZ, bB.screenZ);
     }
@@ -219,7 +239,7 @@ function drawInteractionLines() {
             tempStart.screenZ = 0;
         }
 
-        tempStart.screenZ =1;
+        tempStart.screenZ = 1;
 
         drawLine(globalCanvas.context, [tempStart.screenX, tempStart.screenY], [globalStates.pointerPosition[0], globalStates.pointerPosition[1]], tempStart.screenZ, 1);
     }
@@ -317,7 +337,7 @@ function drawLine(context, lineStartPoint, lineEndPoint, lineStartWeight, lineEn
         context.closePath();
 
     }
-    // Drawing the line for when the touch point is less then 20 pixels awalineY from the touchdown
+        // Drawing the line for when the touch point is less then 20 pixels awalineY from the touchdown
     else {
         context.beginPath();
         context.moveTo(vA(lineEnd_, vMN(lineArrowVectorP, lineEndWeight))[0], vA(lineEnd_, vMN(lineArrowVectorP, lineEndWeight))[1]);

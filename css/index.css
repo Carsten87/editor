@@ -156,7 +156,8 @@ body {
     width: 100%;
     margin: 0;
     padding: 20px;
-    background-color: #969696;
+    /*background-color: #969696;*/
+    background-color: pink;
 
     -webkit-transform: translateZ(1px);
 }
