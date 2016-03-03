@@ -95,31 +95,10 @@ function deleteLines(x21, y21, x22, y22) {
  **/
 
 function drawAllLines(thisObject, context) {
-    var i = 0;
     var multiplier = 1;
     var captionOffsetY = 0;
+    var counters = {};
     for (var subKey in thisObject.objectLinks) {
-
-
-        if (i == 0) {
-            multiplier = 0;
-        } else {
-            if (i % 2 == 0) {
-                multiplier = i - 1;
-            } else {
-                multiplier = -i;
-            }
-        }
-
-        if (i % 4 == 0) {
-            captionOffsetY = 0;
-        } else if (i % 4 == 1) {
-            captionOffsetY = 25;
-        } else if (i % 4 == 2) {
-            captionOffsetY = 50;
-        } else if (i % 4 == 3) {
-            captionOffsetY = 0;
-        }
         if (!thisObject.objectLinks.hasOwnProperty(subKey)) {
             continue;
         }
@@ -149,7 +128,7 @@ function drawAllLines(thisObject, context) {
 
         // bA.screenZ =  thisM/(Math.sqrt(bA.screenZ));
         // bB.screenZ = thisM/(Math.sqrt(bB.screenZ));
-
+        
 
         bA.screenZ = thisM / (bA.screenZ);
         bB.screenZ = thisM / (bB.screenZ);
@@ -180,14 +159,66 @@ function drawAllLines(thisObject, context) {
 
 
         if (!oB.ObjectVisible) {
+            if (!counters.hasOwnProperty(l.locationInA)) {
+                counters[l.locationInA] = 0;
+            } else {
+                counters[l.locationInA]++;
+            }
+
+            if (counters[l.locationInA] == 0) {
+                multiplier = 0;
+            } else {
+                if (counters[l.locationInA] % 2 == 0) {
+                    multiplier = counters[l.locationInA] - 1;
+                } else {
+                    multiplier = -counters[l.locationInA];
+                }
+            }
+
+            if (counters[l.locationInA] % 4 == 0) {
+                captionOffsetY = 0;
+            } else if (counters[l.locationInA] % 4 == 1) {
+                captionOffsetY = 25;
+            } else if (counters[l.locationInA] % 4 == 2) {
+                captionOffsetY = 50;
+            } else if (counters[l.locationInA] % 4 == 3) {
+                captionOffsetY = 0;
+            }
+
+
             bB.screenX = bA.screenX + 100 * multiplier;
             bB.screenY = -10;
             bB.screenZ = bA.screenZ;
         }
 
 
-
         if (!oA.ObjectVisible) {
+            if (!counters.hasOwnProperty(l.locationInB)) {
+                counters[l.locationInB] = 0;
+            } else {
+                counters[l.locationInB]++;
+            }
+
+            if (counters[l.locationInB] == 0) {
+                multiplier = 0;
+            } else {
+                if (counters[l.locationInB] % 2 == 0) {
+                    multiplier = counters[l.locationInB] - 1;
+                } else {
+                    multiplier = -counters[l.locationInB];
+                }
+            }
+
+            if (counters[l.locationInB] % 4 == 0) {
+                captionOffsetY = 0;
+            } else if (counters[l.locationInB] % 4 == 1) {
+                captionOffsetY = 25;
+            } else if (counters[l.locationInB] % 4 == 2) {
+                captionOffsetY = 50;
+            } else if (counters[l.locationInB] % 4 == 3) {
+                captionOffsetY = 0;
+            }
+
             bA.screenX = bB.screenX + 100 * multiplier;
             bA.screenY = -10;
             bA.screenZ = bB.screenZ;
@@ -208,7 +239,6 @@ function drawAllLines(thisObject, context) {
             var tempFillStyle = context.fillStyle;
             context.font = "25px sans-serif";
             context.fillStyle = "white";
-            //context.fillText(oB.name + " " + bB.name, bB.screenX, 20 + captionOffsetY);
             context.fillText(oB.name + " " + bB.name, getIntersectionPoint(bA.screenX, bA.screenY, bB.screenX, bB.screenY, 20 + captionOffsetY), 20 + captionOffsetY);
             context.font = tempFont;
             context.fillStyle = tempFillStyle;
@@ -218,12 +248,10 @@ function drawAllLines(thisObject, context) {
             var tempFillStyle = context.fillStyle;
             context.font = "25px sans-serif";
             context.fillStyle = "white";
-            //context.fillText(oA.name + " " + bA.name, bA.screenX, 20 + captionOffsetY);
-            context.fillText(oB.name + " " + bB.name, getIntersectionPoint(bA.screenX, bA.screenY, bB.screenX, bB.screenY, 20 + captionOffsetY), 20 + captionOffsetY);
+            context.fillText(oA.name + " " + bA.name, getIntersectionPoint(bA.screenX, bA.screenY, bB.screenX, bB.screenY, 20 + captionOffsetY), 20 + captionOffsetY);
             context.font = tempFont;
             context.fillStyle = tempFillStyle;
         }
-        i++;
     }
     globalCanvas.hasContent = true;
 }
