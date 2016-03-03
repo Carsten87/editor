@@ -95,7 +95,31 @@ function deleteLines(x21, y21, x22, y22) {
  **/
 
 function drawAllLines(thisObject, context) {
+    var i = 0;
+    var multiplier = 1;
+    var captionOffsetY = 0;
     for (var subKey in thisObject.objectLinks) {
+
+
+        if (i == 0) {
+            multiplier = 0;
+        } else {
+            if (i % 2 == 0) {
+                multiplier = i - 1;
+            } else {
+                multiplier = -i;
+            }
+        }
+
+        if (i % 4 == 0) {
+            captionOffsetY = 0;
+        } else if (i % 4 == 1) {
+            captionOffsetY = 25;
+        } else if (i % 4 == 2) {
+            captionOffsetY = 50;
+        } else if (i % 4 == 3) {
+            captionOffsetY = 0;
+        }
         if (!thisObject.objectLinks.hasOwnProperty(subKey)) {
             continue;
         }
@@ -156,30 +180,36 @@ function drawAllLines(thisObject, context) {
 
 
         if (!oB.ObjectVisible) {
-            bB.screenX = bA.screenX;
+            bB.screenX = bA.screenX + 100 * multiplier;
             bB.screenY = -10;
             bB.screenZ = bA.screenZ;
         }
 
-       
+
 
         if (!oA.ObjectVisible) {
-            bA.screenX = bB.screenX;
+            bA.screenX = bB.screenX + 100 * multiplier;
             bA.screenY = -10;
             bA.screenZ = bB.screenZ;
         }
 
-        
+
         //   console.log( bB.screenZ);
         bA.screenZ = 1;
         bB.screenZ = 1;
 
+
+
+        drawLine(context, [bA.screenX, bA.screenY], [bB.screenX, bB.screenY], bA.screenZ, bB.screenZ);
+
+        //draw caption
         if (!oB.ObjectVisible && oA.ObjectVisible) {
             var tempFont = context.font;
             var tempFillStyle = context.fillStyle;
             context.font = "25px sans-serif";
             context.fillStyle = "white";
-            context.fillText(oB.name + " " + bB.name, bA.screenX + 10, 20);
+            //context.fillText(oB.name + " " + bB.name, bB.screenX, 20 + captionOffsetY);
+            context.fillText(oB.name + " " + bB.name, getIntersectionPoint(bA.screenX, bA.screenY, bB.screenX, bB.screenY, 20 + captionOffsetY), 20 + captionOffsetY);
             context.font = tempFont;
             context.fillStyle = tempFillStyle;
         }
@@ -188,16 +218,20 @@ function drawAllLines(thisObject, context) {
             var tempFillStyle = context.fillStyle;
             context.font = "25px sans-serif";
             context.fillStyle = "white";
-            context.fillText(oA.name + " " + bA.name, bA.screenX + 10, 20);
+            //context.fillText(oA.name + " " + bA.name, bA.screenX, 20 + captionOffsetY);
+            context.fillText(oB.name + " " + bB.name, getIntersectionPoint(bA.screenX, bA.screenY, bB.screenX, bB.screenY, 20 + captionOffsetY), 20 + captionOffsetY);
             context.font = tempFont;
             context.fillStyle = tempFillStyle;
         }
-
-        drawLine(context, [bA.screenX, bA.screenY], [bB.screenX, bB.screenY], bA.screenZ, bB.screenZ);
+        i++;
     }
     globalCanvas.hasContent = true;
 }
 
+function getIntersectionPoint(line1StartX, line1StartY, line1EndX, line1EndY, intersectionY) {
+    var x = (intersectionY - line1StartY) * (line1EndX - line1StartX) / (line1EndY - line1StartY) + line1StartX;
+    return x;
+}
 /**********************************************************************************************************************
  **********************************************************************************************************************/
 
