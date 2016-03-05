@@ -56,6 +56,10 @@
 function touchDown(evt) {
     if (!globalStates.editingMode) {
         if (!globalStates.guiButtonState) {
+            //evt.target.querySelector('#iopoint').style.filter = "url(#glow)";
+            //window.frames["iframe" + this.ObjectId].document.getElementById('iopoint').style.filter = "url(#glow)";
+            //document.getElementById("iframe" + this.ObjectId).querySelector('#iopoint').style.filter = "url(#glow)";
+
             if (!globalProgram.ObjectA) {
                 globalProgram.ObjectA = this.ObjectId;
                 globalProgram.locationInA = this.location;

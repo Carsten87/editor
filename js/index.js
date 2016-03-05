@@ -79,14 +79,14 @@ function addHeartbeatObject(beat) {
      */
     if (beat.id) {
         if (!objectExp[beat.id]) {
-            getData('http://' + beat.ip + ':' + httpPort +'/object/'+beat.id, beat.id, function (req, thisKey) {
+            getData('http://' + beat.ip + ':' + httpPort + '/object/' + beat.id, beat.id, function (req, thisKey) {
                 objectExp[thisKey] = req;
 
-              // this is a work around to set the state of an objects to not being visible.
+                // this is a work around to set the state of an objects to not being visible.
                 objectExp[thisKey].ObjectVisible = false;
                 objectExp[thisKey].screenZ = 1000;
 
-               console.log(objectExp[thisKey]);
+                console.log(objectExp[thisKey]);
             });
         }
     }
@@ -104,31 +104,31 @@ function setStates(developerState, extendedTrackingState, clearSkyState, externa
 
 
     globalStates.extendedTrackingState = extendedTrackingState;
-        globalStates.developerState = developerState;
-        globalStates.clearSkyState = clearSkyState;
+    globalStates.developerState = developerState;
+    globalStates.clearSkyState = clearSkyState;
     globalStates.externalState = externalState;
 
 
 
-if(clearSkyState){
-   // globalStates.UIOffMode = true;
-    timeForContentLoaded = 240000;
-   // document.getElementById("turnOffUISwitch").checked = true;
-}
+    if (clearSkyState) {
+        // globalStates.UIOffMode = true;
+        timeForContentLoaded = 240000;
+        // document.getElementById("turnOffUISwitch").checked = true;
+    }
 
-    if(developerState){
+    if (developerState) {
         addEventHandlers();
         globalStates.editingMode = true;
         document.getElementById("editingModeSwitch").checked = true;
     }
 
-    if(extendedTrackingState){
+    if (extendedTrackingState) {
         globalStates.extendedTracking = true;
         document.getElementById("extendedTrackingSwitch").checked = true;
     }
 
 
-    if(globalStates.externalState !==""){
+    if (globalStates.externalState !== "") {
         document.getElementById("newURLText").value = globalStates.externalState;
     }
 
@@ -144,12 +144,11 @@ if(clearSkyState){
  * @return
  **/
 
-function action(action){
-   var thisAction = JSON.parse(action);
+function action(action) {
+    var thisAction = JSON.parse(action);
 
-    if (thisAction.reloadLink)
-    {
-        getData('http://' + thisAction.reloadLink.ip + ':' + httpPort +'/object/'+thisAction.reloadLink.id, thisAction.reloadLink.id, function (req, thisKey) {
+    if (thisAction.reloadLink) {
+        getData('http://' + thisAction.reloadLink.ip + ':' + httpPort + '/object/' + thisAction.reloadLink.id, thisAction.reloadLink.id, function (req, thisKey) {
             objectExp[thisKey].objectLinks = req.objectLinks;
             // console.log(objectExp[thisKey]);
             console.log("got links");
@@ -157,9 +156,8 @@ function action(action){
 
     }
 
-    if (thisAction.reloadObject)
-    {
-        getData('http://' + thisAction.reloadObject.ip + ':' + httpPort +'/object/'+thisAction.reloadObject.id, thisAction.reloadObject.id, function (req, thisKey) {
+    if (thisAction.reloadObject) {
+        getData('http://' + thisAction.reloadObject.ip + ':' + httpPort + '/object/' + thisAction.reloadObject.id, thisAction.reloadObject.id, function (req, thisKey) {
             objectExp[thisKey].x = req.x;
             objectExp[thisKey].y = req.y;
             objectExp[thisKey].scale = req.scale;
@@ -171,7 +169,7 @@ function action(action){
     }
 
 
-console.log("found action: "+action);
+    console.log("found action: " + action);
 
 }
 
@@ -302,7 +300,7 @@ function update(objects) {
 
             if (globalStates.guiButtonState || Object.keys(generalObject.objectValues).length === 0) {
                 drawTransformed(generalObject, key, tempMatrix, key);
-                addElement(generalObject, key, "http://" + generalObject.ip + ":" + httpPort +"/obj/"+key.slice(0, -12)+"/");
+                addElement(generalObject, key, "http://" + generalObject.ip + ":" + httpPort + "/obj/" + key.slice(0, -12) + "/");
             }
             else {
                 hideTransformed(generalObject, key, key);
@@ -383,23 +381,23 @@ function drawTransformed(thisObject, thisKey, thisTransform2, generalKey) {
 
             thisObject.visible = true;
 
-            if(generalKey !== thisKey){
+            if (generalKey !== thisKey) {
                 document.getElementById(thisKey).style.visibility = 'visible';
                 document.getElementById("text" + thisKey).style.visibility = 'visible';
             }
 
 
         }
-if(generalKey === thisKey) {
-    if (globalStates.editingMode) {
-        if(!thisObject.visibleEditing && thisObject.developer){
-        thisObject.visibleEditing = true;
-        document.getElementById(thisKey).style.visibility = 'visible';
+        if (generalKey === thisKey) {
+            if (globalStates.editingMode) {
+                if (!thisObject.visibleEditing && thisObject.developer) {
+                    thisObject.visibleEditing = true;
+                    document.getElementById(thisKey).style.visibility = 'visible';
 
-        document.getElementById(thisKey).className = "mainProgram";
-    }
-    }
-}
+                    document.getElementById(thisKey).className = "mainProgram";
+                }
+            }
+        }
 
         var finalMatrixTransform = [
             [thisObject.scale, 0, 0, 0],
@@ -443,13 +441,13 @@ function hideTransformed(thisObject, thisKey, generalKey) {
     if (thisObject.visible === true) {
         document.getElementById("thisObject" + thisKey).style.display = 'none';
         document.getElementById("iframe" + thisKey).style.visibility = 'hidden';
-       //document.getElementById("iframe" + thisKey).style.display = 'none';
+        //document.getElementById("iframe" + thisKey).style.display = 'none';
         document.getElementById("text" + thisKey).style.visibility = 'hidden';
-     //document.getElementById("text" + thisKey).style.display = 'none';
+        //document.getElementById("text" + thisKey).style.display = 'none';
         thisObject.visible = false;
         thisObject.visibleEditing = false;
         document.getElementById(thisKey).style.visibility = 'hidden';
-      //document.getElementById(thisKey).style.display = 'none';
+        //document.getElementById(thisKey).style.display = 'none';
 
     }
 
@@ -609,7 +607,7 @@ function addElement(thisObject, thisKey, thisUrl, generalObject) {
         "";
 
         tempAddContent += "<div id='text" + thisKey + "' frameBorder='0' style='width:5px; height:5px;" +
-        "top:" + ((globalStates.width) / 2+thisObject.frameSizeX/2) + "px; left:" + ((globalStates.height - thisObject.frameSizeY) / 2) + "px; visibility: hidden;' class='mainProgram'><font color='white'>"+thisObject.name+"</font></div>" +
+        "top:" + ((globalStates.width) / 2 + thisObject.frameSizeX / 2) + "px; left:" + ((globalStates.height - thisObject.frameSizeY) / 2) + "px; visibility: hidden;' class='mainProgram'><font color='white'>" + thisObject.name + "</font></div>" +
         "";
 
         document.getElementById("thisObject" + thisKey).innerHTML = tempAddContent;
@@ -619,11 +617,11 @@ function addElement(thisObject, thisKey, thisUrl, generalObject) {
         theObject.addEventListener("pointerdown", touchDown, false);
         theObject.addEventListener("pointerup", trueTouchUp, false);
         if (globalStates.editingMode) {
-            if(objectExp[generalObject].developer){
-            //theObject.addEventListener("touchstart", MultiTouchStart, false);
-            theObject.addEventListener("touchmove", MultiTouchMove, false);
-            theObject.addEventListener("touchend", MultiTouchEnd, false);
-            theObject.className = "mainProgram";
+            if (objectExp[generalObject].developer) {
+                //theObject.addEventListener("touchstart", MultiTouchStart, false);
+                theObject.addEventListener("touchmove", MultiTouchMove, false);
+                theObject.addEventListener("touchend", MultiTouchEnd, false);
+                theObject.className = "mainProgram";
             }
         }
         theObject.ObjectId = generalObject;
@@ -631,7 +629,7 @@ function addElement(thisObject, thisKey, thisUrl, generalObject) {
 
         if (thisKey !== generalObject) {
             theObject.style.visibility = "visible";
-          // theObject.style.display = "initial";
+            // theObject.style.display = "initial";
         }
         else {
             theObject.style.visibility = "hidden";
@@ -658,17 +656,17 @@ function killObjects(thisObject, thisKey) {
         thisObject.loaded = false;
 
         var tempElementDiv = document.getElementById("thisObject" + thisKey);
-            tempElementDiv.parentNode.removeChild(tempElementDiv);
+        tempElementDiv.parentNode.removeChild(tempElementDiv);
 
         for (var subKey in thisObject.objectValues) {
-           try{
-            tempElementDiv = document.getElementById("thisObject" +subKey);
-            tempElementDiv.parentNode.removeChild(tempElementDiv);
-      } catch(err){
-         console.log("could not find any");
-     }
+            try {
+                tempElementDiv = document.getElementById("thisObject" + subKey);
+                tempElementDiv.parentNode.removeChild(tempElementDiv);
+            } catch (err) {
+                console.log("could not find any");
+            }
             thisObject.objectValues[subKey].loaded = false;
-       }
+        }
     }
 }
 
@@ -682,12 +680,12 @@ function killObjects(thisObject, thisKey) {
  * @return
  **/
 
-function on_load(generalObject,thisKey) {
+function on_load(generalObject, thisKey) {
     globalStates.notLoading = false;
     // window.location.href = "of://event_test_"+thisKey;
 
-   // console.log("posting Msg");
-    var iFrameMessage_ = JSON.stringify({obj: generalObject, pos:thisKey, objectValues:objectExp[generalObject].objectValues});
+    // console.log("posting Msg");
+    var iFrameMessage_ = JSON.stringify({ obj: generalObject, pos: thisKey, objectValues: objectExp[generalObject].objectValues });
     document.getElementById("iframe" + thisKey).contentWindow.postMessage(
         iFrameMessage_, '*');
 }
