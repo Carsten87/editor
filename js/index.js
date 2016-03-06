@@ -610,12 +610,18 @@ function addElement(thisObject, thisKey, thisUrl, generalObject) {
         "top:" + ((globalStates.width) / 2 + thisObject.frameSizeX / 2) + "px; left:" + ((globalStates.height - thisObject.frameSizeY) / 2) + "px; visibility: hidden;' class='mainProgram'><font color='white'>" + thisObject.name + "</font></div>" +
         "";
 
+       
+
         document.getElementById("thisObject" + thisKey).innerHTML = tempAddContent;
+        console.log("iframe" + thisKey);
+
         var theObject = document.getElementById(thisKey);
         theObject.style["touch-action"] = "none";
         theObject["handjs_forcePreventDefault"] = true;
         theObject.addEventListener("pointerdown", touchDown, false);
         theObject.addEventListener("pointerup", trueTouchUp, false);
+        theObject.addEventListener("pointerenter", enterIOPoint, false);
+        theObject.addEventListener("pointerleave", leaveIOPoint, false);
         if (globalStates.editingMode) {
             if (objectExp[generalObject].developer) {
                 //theObject.addEventListener("touchstart", MultiTouchStart, false);
