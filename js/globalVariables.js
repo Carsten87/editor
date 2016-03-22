@@ -55,6 +55,10 @@
  ******************************************** constant settings *******************************************************
  **********************************************************************************************************************/
 
+    var ec = 0;
+var disp = {};
+
+var uiButtons;
 var httpPort = 8080;
 var timeForContentLoaded = 240; // temporary set to 1000x with the UI Recording mode for video recording
 
@@ -74,7 +78,8 @@ var globalStates = {
     developerState: false,
     clearSkyState: false,
     externalState:"",
-
+    sendMatrix3d:false,
+    sendAcl:false,
 
     feezeButtonState: false,
     logButtonState: false,
@@ -96,7 +101,8 @@ var globalStates = {
     ],
     editingModeHaveObject: false,
     angX: 0,
-    angY: 0
+    angY: 0,
+    unconstrainedPositioning:false
 };
 
 var globalCanvas = {};
@@ -111,6 +117,30 @@ var globalProgram = {
 };
 
 var objectExp = {};
+
+
+var globalMatrix = {
+    temp: [
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1]
+    ],
+    begin: [
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1]
+    ],
+    end: [
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1]
+    ],
+    matrixtouchOn : false,
+    copyStillFromMatrixSwitch : false
+};
 
 var consoleText = "";
  var rotateX = [

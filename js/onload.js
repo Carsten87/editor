@@ -63,7 +63,7 @@
  **/
 
 window.onload = function () {
-
+    uiButtons = document.getElementById("GUI");
     GUI();
 
     if (globalStates.platform !== 'iPad' && globalStates.platform !== 'iPhone' && globalStates.platform !== 'iPod') {
@@ -159,14 +159,19 @@ window.onload = function () {
     globalCanvas.canvas.handjs_forcePreventDefault = true;
 
     globalCanvas.canvas.addEventListener("pointerdown", canvasPointerDown, false);
+    ec++;
 
     document.addEventListener("pointermove", getPossition, false);
+    ec++;
     document.addEventListener("pointerdown", getPossition, false);
+    ec++;
     document.addEventListener("pointerup", documentPointerUp, false);
+    ec++;
     window.addEventListener("message", postMessage, false);
+    ec++;
 
 
-
+    console.log("onload");
 
 };
 
@@ -177,7 +182,7 @@ window.onload = function () {
  * @return
  **/
 
-function postMessage(e) {
+var postMessage = function (e) {
     console.log(e.data);
     var msgContent = JSON.parse(e.data);
     document.getElementById(msgContent.pos).style.width = msgContent.width;
@@ -189,5 +194,24 @@ function postMessage(e) {
     document.getElementById("iframe" + msgContent.pos).style.height = msgContent.height;
     document.getElementById("iframe" + msgContent.pos).style.top = ((globalStates.width - msgContent.height) / 2);
     document.getElementById("iframe" + msgContent.pos).style.left = ((globalStates.height - msgContent.width) / 2);
+
+
+
+    if (typeof objectExp[msgContent] !== "undefined") {
+        if (typeof msgContent.sendMatrixCSS !== "undefined") {
+            if(msgContent.sendMatrixCSS === true) {
+                objectExp[msgContent].sendMatrixCSS = true;
+            }
+        }
+
+       /* if (typeof msgContent.sendAcl !== "undefined") {
+            if(msgContent.sendAcl === true) {
+                objectExp[msgContent.obj].sendAcl = true;
+                window.location.href = "of://sendAccelerationData";
+            }
+        }*/
+    }
+
+    console.log("postMessage");
 
 };

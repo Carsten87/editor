@@ -54,7 +54,7 @@
  * @return
  **/
 
-function deleteLines(x21, y21, x22, y22) {
+var deleteLines = function (x21, y21, x22, y22) {
     // window.location.href = "of://gotsome";
     for (var keysome in objectExp) {
         if (!objectExp.hasOwnProperty(keysome)) {
@@ -83,7 +83,7 @@ function deleteLines(x21, y21, x22, y22) {
         }
     }
 
-}
+};
 /**********************************************************************************************************************
  **********************************************************************************************************************/
 
@@ -121,20 +121,20 @@ function drawAllLines(thisObject, context) {
         if (bA === undefined || bB === undefined || oA === undefined || oB === undefined) {
             continue; //should not be undefined
         }
-        // the line actuall screen possition gets changed so that when cutting the line of an out of image object
-        // the line still gets cut
+            // the line actuall screen possition gets changed so that when cutting the line of an out of image object
+            // the line still gets cut
 
-        var thisM = globalStates.height / 500 * 1000;
+            var thisM = globalStates.height / 500 * 1000;
 
-        // bA.screenZ =  thisM/(Math.sqrt(bA.screenZ));
-        // bB.screenZ = thisM/(Math.sqrt(bB.screenZ));
-        
+            // bA.screenZ =  thisM/(Math.sqrt(bA.screenZ));
+            // bB.screenZ = thisM/(Math.sqrt(bB.screenZ));
 
-        bA.screenZ = thisM / (bA.screenZ);
-        bB.screenZ = thisM / (bB.screenZ);
 
-        // console.log(oB.ObjectVisible);
-        // console.log(oA.ObjectVisible);
+            bA.screenZ = thisM / (bA.screenZ);
+            bB.screenZ = thisM / (bB.screenZ);
+
+           // console.log(oB.ObjectVisible);
+           // console.log(oA.ObjectVisible);
 
 
         if (bA.screenZ > 3) {
@@ -187,12 +187,12 @@ function drawAllLines(thisObject, context) {
 
 
             bB.screenX = bA.screenX + 100 * multiplier;
-            bB.screenY = -10;
-            bB.screenZ = bA.screenZ;
-        }
+                bB.screenY = -10;
+                bB.screenZ = bA.screenZ;
+            }
 
 
-        if (!oA.ObjectVisible) {
+            if (!oA.ObjectVisible) {
             if (!counters.hasOwnProperty(l.locationInB)) {
                 counters[l.locationInB] = 0;
             } else {
@@ -220,14 +220,14 @@ function drawAllLines(thisObject, context) {
             }
 
             bA.screenX = bB.screenX + 100 * multiplier;
-            bA.screenY = -10;
-            bA.screenZ = bB.screenZ;
-        }
+                bA.screenY = -10;
+                bA.screenZ = bB.screenZ;
+            }
 
 
-        //   console.log( bB.screenZ);
+            //   console.log( bB.screenZ);
         bA.screenZ = 1;
-        bB.screenZ = 1;
+            bB.screenZ = 1;
 
 
 
@@ -254,7 +254,7 @@ function drawAllLines(thisObject, context) {
         }
     }
     globalCanvas.hasContent = true;
-}
+};
 
 function getIntersectionPoint(line1StartX, line1StartY, line1EndX, line1EndY, intersectionY) {
     var x = (intersectionY - line1StartY) * (line1EndX - line1StartX) / (line1EndY - line1StartY) + line1StartX;
@@ -270,7 +270,7 @@ function getIntersectionPoint(line1StartX, line1StartY, line1EndX, line1EndY, in
  * @return
  **/
 
-function drawInteractionLines() {
+var drawInteractionLines = function () {
 
     // this function here needs to be more precise
 
@@ -311,7 +311,7 @@ function drawInteractionLines() {
     }
 
     globalCanvas.hasContent = true;
-}
+};
 
 /**********************************************************************************************************************
  **********************************************************************************************************************/
@@ -323,7 +323,7 @@ function drawInteractionLines() {
  * @return
  **/
 
-function drawLine(context, lineStartPoint, lineEndPoint, lineStartWeight, lineEndWeight) {
+var drawLine = function (context, lineStartPoint, lineEndPoint, lineStartWeight, lineEndWeight) {
 
     // calculating all needed values for drawing the line
     var linePointWeight2 = (lineStartWeight * 3 / 4) + (lineEndWeight / 4);
@@ -399,7 +399,7 @@ function drawLine(context, lineStartPoint, lineEndPoint, lineStartWeight, lineEn
         context.closePath();
 
     }
-        // Drawing the line for when the touch point is less then 20 pixels awalineY from the touchdown
+    // Drawing the line for when the touch point is less then 20 pixels awalineY from the touchdown
     else {
         context.beginPath();
         context.moveTo(vA(lineEnd_, vMN(lineArrowVectorP, lineEndWeight))[0], vA(lineEnd_, vMN(lineArrowVectorP, lineEndWeight))[1]);
@@ -425,7 +425,7 @@ function drawLine(context, lineStartPoint, lineEndPoint, lineStartWeight, lineEn
     context.fillStyle = "#00fdff";
     context.fill();
     context.closePath();
-}
+};
 
 /**********************************************************************************************************************
  **********************************************************************************************************************/
@@ -437,7 +437,7 @@ function drawLine(context, lineStartPoint, lineEndPoint, lineStartWeight, lineEn
  * @return
  **/
 
-function drawDotLine(context, lineStartPoint, lineEndPoint, b1, b2) {
+var drawDotLine = function (context, lineStartPoint, lineEndPoint, b1, b2) {
     context.beginPath();
     context.moveTo(lineStartPoint[0], lineStartPoint[1]);
     context.lineTo(lineEndPoint[0], lineEndPoint[1]);
@@ -446,7 +446,7 @@ function drawDotLine(context, lineStartPoint, lineEndPoint, b1, b2) {
     context.strokeStyle = "#00fdff";
     context.stroke();
     context.closePath();
-}
+};
 
 /**
  * @desc
@@ -455,7 +455,7 @@ function drawDotLine(context, lineStartPoint, lineEndPoint, b1, b2) {
  * @return
  **/
 
-function drawGreen(context, lineStartPoint, lineEndPoint, radius) {
+var drawGreen = function (context, lineStartPoint, lineEndPoint, radius) {
     context.beginPath();
     context.arc(lineStartPoint[0], lineStartPoint[1], radius, 0, Math.PI * 2);
     context.strokeStyle = "#7bff08";
@@ -464,7 +464,7 @@ function drawGreen(context, lineStartPoint, lineEndPoint, radius) {
     context.stroke();
     context.closePath();
 
-}
+};
 
 /**
  * @desc
@@ -473,7 +473,7 @@ function drawGreen(context, lineStartPoint, lineEndPoint, radius) {
  * @return
  **/
 
-function drawRed(context, lineStartPoint, lineEndPoint, radius) {
+var drawRed = function (context, lineStartPoint, lineEndPoint, radius) {
     context.beginPath();
     context.arc(lineStartPoint[0], lineStartPoint[1], radius, 0, Math.PI * 2);
     context.strokeStyle = "#ff036a";
@@ -481,7 +481,7 @@ function drawRed(context, lineStartPoint, lineEndPoint, radius) {
     context.setLineDash([7]);
     context.stroke();
     context.closePath();
-}
+};
 
 /**
  * @desc
@@ -490,7 +490,7 @@ function drawRed(context, lineStartPoint, lineEndPoint, radius) {
  * @return
  **/
 
-function drawBlue(context, lineStartPoint, lineEndPoint, radius) {
+var drawBlue = function (context, lineStartPoint, lineEndPoint, radius) {
     context.beginPath();
     context.arc(lineStartPoint[0], lineStartPoint[1], radius, 0, Math.PI * 2);
     context.strokeStyle = "#01fffd";
@@ -498,7 +498,7 @@ function drawBlue(context, lineStartPoint, lineEndPoint, radius) {
     context.setLineDash([7]);
     context.stroke();
     context.closePath();
-}
+};
 
 /**
  * @desc
@@ -507,7 +507,7 @@ function drawBlue(context, lineStartPoint, lineEndPoint, radius) {
  * @return
  **/
 
-function drawYellow(context, lineStartPoint, lineEndPoint, radius) {
+var drawYellow = function (context, lineStartPoint, lineEndPoint, radius) {
     context.beginPath();
     context.arc(lineStartPoint[0], lineStartPoint[1], radius, 0, Math.PI * 2);
     context.strokeStyle = "#FFFF00";
@@ -515,5 +515,5 @@ function drawYellow(context, lineStartPoint, lineEndPoint, radius) {
     context.setLineDash([7]);
     context.stroke();
     context.closePath();
-}
+};
 
